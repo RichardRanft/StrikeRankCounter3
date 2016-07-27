@@ -52,7 +52,7 @@
 	<summary>
 		<codepage>1252</codepage>
 		<title>##ID_STRING4##</title>
-		<subject></subject>
+		<subject>##ID_STRING5##</subject>
 		<author>##ID_STRING3##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Contact:  Your local administrator</comments>
@@ -348,7 +348,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{64D8CC7B-ABFD-4B86-94F8-72A92759B5A4}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SRC3.Primary_output</td><td>{3C15DE59-5D38-4E4C-B4BA-5F6350BAE67A}</td><td>SRC3</td><td>2</td><td/><td>src3.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SRC3.Primary_output1</td><td>{1D17864E-4A99-4695-915C-FEEF0D7AE442}</td><td>ROOSTERTAIL_GAMES</td><td>2</td><td/><td>src3.primary_output1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SRC3.exe</td><td>{EF466485-761C-470C-B156-43A12D30FF4E}</td><td>INSTALLDIR</td><td>2</td><td/><td>src3.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SRC3.exe</td><td>{6247F399-EBC4-42FD-B08A-7B1B64620F73}</td><td>INSTALLDIR</td><td>2</td><td/><td>src3.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1196,7 +1196,7 @@
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 		<row><td>rooste_1_roostertail_games</td><td>ProgramMenuFolder</td><td>ROOSTE~1|Roostertail Games</td><td/><td>1</td><td/></row>
-		<row><td>srcset_1_src_setup</td><td>rooste_1_roostertail_games</td><td>SRCSET~1|SRC Setup</td><td/><td>1</td><td/></row>
+		<row><td>srcset_1_src_setup</td><td>rooste_1_roostertail_games</td><td>STRIKE~1|Strike Rank Counter 3</td><td/><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -1911,8 +1911,10 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>rtg.ico</td><td>ISX_DEFAULTCOMPONENT5</td><td>RTG.ico</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\SRC3\RTG.ico</td><td>1</td><td/></row>
-		<row><td>src3.exe</td><td>SRC3.exe</td><td>SRC3.exe</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\SRC3\bin\Release\SRC3.exe</td><td>1</td><td/></row>
+		<row><td>rtg.ico</td><td>ISX_DEFAULTCOMPONENT5</td><td>RTG.ico</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\StrikeRankCounter3\SRC3\RTG.ico</td><td>1</td><td/></row>
+		<row><td>src3.exe</td><td>SRC3.exe</td><td>SRC3.exe</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\StrikeRankCounter3\SRC3\bin\Release\SRC3.exe</td><td>1</td><td/></row>
+		<row><td>src3.exe.config</td><td>ISX_DEFAULTCOMPONENT5</td><td>SRC3EX~1.CON|SRC3.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\StrikeRankCounter3\SRC3\bin\Release\SRC3.exe.config</td><td>1</td><td/></row>
+		<row><td>src3.pdb</td><td>ISX_DEFAULTCOMPONENT5</td><td>SRC3.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>I:\programming\SRC3\StrikeRankCounter3\SRC3\bin\Release\SRC3.pdb</td><td>1</td><td/></row>
 		<row><td>src3.primary_output</td><td>SRC3.Primary_output</td><td>SRC3.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SRC3&gt;|Built</td><td>3</td><td/></row>
 		<row><td>src3.primary_output1</td><td>SRC3.Primary_output1</td><td>SRC3.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SRC3&gt;|Built</td><td>3</td><td/></row>
 	</table>
@@ -2067,7 +2069,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_F69326C8_0078_4468_8FA0_6AF184667AEF_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SRC3.Primary_output</td><td/><td/><td>_4F82BC7B_951C_486A_BDFB_06D82242D526_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SRC3.Primary_output1</td><td/><td/><td>_28C5CE31_F514_45FD_A5BE_FA42D65CE565_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SRC3.exe</td><td/><td/><td>_4AA7C940_9B80_409A_B651_857E215844F9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SRC3.exe</td><td/><td/><td>_08DF38A3_E588_4CDD_9A35_6DCB280ED506_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -3763,14 +3765,17 @@
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>463746153</td></row>
 		<row><td>ID_STRING2</td><td>1033</td><td>http://www.RoostertailGames.com</td><td>0</td><td/><td>463766665</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Roostertail Games</td><td>0</td><td/><td>463742089</td></row>
-		<row><td>ID_STRING4</td><td>1033</td><td>SRC3 Installation</td><td>0</td><td/><td>463763818</td></row>
+		<row><td>ID_STRING4</td><td>1033</td><td>Strike Rank Counter 3 Installation</td><td>0</td><td/><td>-1012633559</td></row>
+		<row><td>ID_STRING5</td><td>1033</td><td>Installation Summary</td><td>0</td><td/><td>-1012602839</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>support@roostertailgames.com</td><td>0</td><td/><td>-1012656055</td></row>
+		<row><td>ID_STRING7</td><td>1033</td><td>STRIKE~1|Strike Rank Counter 3</td><td>0</td><td/><td>-1012616983</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>463746153</td></row>
 	</table>
 
 	<table name="ISSwidtagProperty">
 		<col key="yes" def="s72">Name</col>
 		<col def="s0">Value</col>
-		<row><td>UniqueId</td><td>11F21752-63C3-4D03-BA29-8F6E7ADA5238</td></row>
+		<row><td>UniqueId</td><td>8B30261A-E58B-4FB0-9983-782346E6EF8D</td></row>
 	</table>
 
 	<table name="ISTargetImage">
@@ -3878,6 +3883,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\setupicon.ico</td><td>0</td></row>
+		<row><td>NewShortcut1_5B1BE07EBA9447D2BC32567C9827FCA6.exe</td><td/><td>I:\programming\SRC3\StrikeRankCounter3\SRC3\bin\Release\SRC3.exe</td><td>0</td></row>
 		<row><td>SRC3.exe_93F061E0356F4CB195C736ECBA06FD08.exe</td><td/><td>&lt;VSSolutionFolder&gt;\SRC3\RTG.ico</td><td>0</td></row>
 	</table>
 
@@ -4011,7 +4017,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{9F2D5390-4D0F-456F-B72D-CB42486B025A}</td></row>
 		<row><td>ISUSSignature</td><td>{575A1FC1-8FB2-4AC2-A971-1771E78C6504}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewCustomActions,viewRegistry,viewSystemSearch,viewRelease,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewIniFiles,viewFileExtensions,viewEnvironmentVariables,viewVRoots,viewServices,viewUI,viewTextMessages</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewCustomActions,viewRegistry,viewSystemSearch,viewRelease,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewIniFiles,viewFileExtensions,viewEnvironmentVariables,viewVRoots,viewServices,viewUI,viewTextMessages,viewISToday,viewLearnMore</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4318,6 +4324,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L0">Value</col>
 		<col def="S255">ISComments</col>
 		<row><td>ALLUSERS</td><td>1</td><td/></row>
+		<row><td>ARPCONTACT</td><td>##ID_STRING6##</td><td/></row>
 		<row><td>ARPINSTALLLOCATION</td><td/><td/></row>
 		<row><td>ARPPRODUCTICON</td><td>ARPPRODUCTICON.exe</td><td/></row>
 		<row><td>ARPSIZE</td><td/><td/></row>
@@ -4464,9 +4471,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>FileKey1</td><td>SRC3.exe</td><td/><td>rooste_1_roostertail_games</td><td>2</td></row>
-		<row><td>FileKey2</td><td>SRC3.exe</td><td/><td>srcset_1_src_setup</td><td>2</td></row>
-		<row><td>SRC3.exe</td><td>SRC3.exe</td><td/><td>srcset_1_src_setup</td><td>2</td></row>
+		<row><td>NewShortcut1</td><td>SRC3.exe</td><td/><td>srcset_1_src_setup</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4552,7 +4557,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>SRC3.exe</td><td>srcset_1_src_setup</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>SRC3.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SRC3.exe_93F061E0356F4CB195C736ECBA06FD08.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut1</td><td>srcset_1_src_setup</td><td>##ID_STRING7##</td><td>SRC3.exe</td><td>[INSTALLDIR]SRC3.exe</td><td/><td/><td/><td>NewShortcut1_5B1BE07EBA9447D2BC32567C9827FCA6.exe</td><td>1</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
