@@ -85,11 +85,9 @@ namespace SRC3
 
         public void PlayOne(String path)
         {
-            if (Playlist.Count > 0)
+            if (File.Exists(path))
             {
                 m_single = true;
-                if (m_random)
-                    index = m_rand.Next(0, Playlist.Count - 1);
                 try
                 {
                     m_player.Stop();

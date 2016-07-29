@@ -101,6 +101,12 @@ namespace SRC3
             }
         }
 
+        private void FPlaylistEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (m_player != null)
+                m_player.Stop();
+        }
+
         private void previewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (m_player == null)
@@ -110,13 +116,24 @@ namespace SRC3
             m_player.Play();
         }
 
-        private void FPlaylistEditor_FormClosing(object sender, FormClosingEventArgs e)
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (m_player != null)
                 m_player.Stop();
         }
 
-        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        private void previewPlayListMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_player == null)
+                m_player = new MediaPlayer();
+            m_player.Stop();
+            CPlaylistEntry entry = (CPlaylistEntry)lbxPlaylist.SelectedItem;
+            String path = entry.Path;
+            m_player.Open(new Uri(path));
+            m_player.Play();
+        }
+
+        private void stopPlayListMenuItem_Click(object sender, EventArgs e)
         {
             if (m_player != null)
                 m_player.Stop();

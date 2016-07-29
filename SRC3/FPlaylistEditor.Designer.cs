@@ -43,6 +43,8 @@
             this.previewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsPopMenuPlaylist = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.previewPlayListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopPlayListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNew = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -157,10 +159,26 @@
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
+            // previewPlayListMenuItem
+            // 
+            this.previewPlayListMenuItem.Name = "previewToolStripMenuItem";
+            this.previewPlayListMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.previewPlayListMenuItem.Text = "Preview";
+            this.previewPlayListMenuItem.Click += new System.EventHandler(this.previewPlayListMenuItem_Click);
+            // 
+            // stopPlayListMenuItem
+            // 
+            this.stopPlayListMenuItem.Name = "stopToolStripMenuItem";
+            this.stopPlayListMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.stopPlayListMenuItem.Text = "Stop";
+            this.stopPlayListMenuItem.Click += new System.EventHandler(this.stopPlayListMenuItem_Click);
+            // 
             // cmsPopMenuPlaylist
             // 
             this.cmsPopMenuPlaylist.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeToolStripMenuItem});
+            this.removeToolStripMenuItem,
+            this.previewPlayListMenuItem,
+            this.stopPlayListMenuItem});
             this.cmsPopMenuPlaylist.Name = "cmsPopMenuPlaylist";
             this.cmsPopMenuPlaylist.Size = new System.Drawing.Size(118, 26);
             // 
@@ -249,6 +267,8 @@
         private System.Windows.Forms.ContextMenuStrip cmsPopMenu;
         private System.Windows.Forms.ToolStripMenuItem previewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previewPlayListMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopPlayListMenuItem;
         private System.Windows.Forms.ContextMenuStrip cmsPopMenuPlaylist;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Button btnNew;
