@@ -11,6 +11,19 @@ namespace SRC3
 {
     public static class CListFileUtil
     {
+        public static String BuildMultiSelectFileList(ListBox sourcebox, String path = "")
+        {
+            StringBuilder sb = new StringBuilder();
+            int index = 0;
+            foreach(object item in sourcebox.SelectedItems)
+            {
+                sb.Append(String.Format("{0}\\{1}", path, item.ToString()));
+                if (++index < sourcebox.SelectedItems.Count)
+                    sb.Append(";");
+            }
+            return sb.ToString();
+        }
+
         public static String GetListFilename(String listname, String extension)
         {
             String playlistname = listname;

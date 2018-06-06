@@ -43,9 +43,9 @@
             this.previewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsPopMenuPlaylist = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previewPlayListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopPlayListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNew = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -79,6 +79,7 @@
             this.lbxFiles.HorizontalScrollbar = true;
             this.lbxFiles.Location = new System.Drawing.Point(12, 52);
             this.lbxFiles.Name = "lbxFiles";
+            this.lbxFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbxFiles.Size = new System.Drawing.Size(372, 485);
             this.lbxFiles.TabIndex = 2;
             this.lbxFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbxFiles_MouseDown);
@@ -159,20 +160,6 @@
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
-            // previewPlayListMenuItem
-            // 
-            this.previewPlayListMenuItem.Name = "previewToolStripMenuItem";
-            this.previewPlayListMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.previewPlayListMenuItem.Text = "Preview";
-            this.previewPlayListMenuItem.Click += new System.EventHandler(this.previewPlayListMenuItem_Click);
-            // 
-            // stopPlayListMenuItem
-            // 
-            this.stopPlayListMenuItem.Name = "stopToolStripMenuItem";
-            this.stopPlayListMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.stopPlayListMenuItem.Text = "Stop";
-            this.stopPlayListMenuItem.Click += new System.EventHandler(this.stopPlayListMenuItem_Click);
-            // 
             // cmsPopMenuPlaylist
             // 
             this.cmsPopMenuPlaylist.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -180,7 +167,7 @@
             this.previewPlayListMenuItem,
             this.stopPlayListMenuItem});
             this.cmsPopMenuPlaylist.Name = "cmsPopMenuPlaylist";
-            this.cmsPopMenuPlaylist.Size = new System.Drawing.Size(118, 26);
+            this.cmsPopMenuPlaylist.Size = new System.Drawing.Size(118, 70);
             // 
             // removeToolStripMenuItem
             // 
@@ -188,6 +175,20 @@
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.removeToolStripMenuItem.Text = "Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // previewPlayListMenuItem
+            // 
+            this.previewPlayListMenuItem.Name = "previewPlayListMenuItem";
+            this.previewPlayListMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.previewPlayListMenuItem.Text = "Preview";
+            this.previewPlayListMenuItem.Click += new System.EventHandler(this.previewPlayListMenuItem_Click);
+            // 
+            // stopPlayListMenuItem
+            // 
+            this.stopPlayListMenuItem.Name = "stopPlayListMenuItem";
+            this.stopPlayListMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.stopPlayListMenuItem.Text = "Stop";
+            this.stopPlayListMenuItem.Click += new System.EventHandler(this.stopPlayListMenuItem_Click);
             // 
             // btnNew
             // 

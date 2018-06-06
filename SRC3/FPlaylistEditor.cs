@@ -85,19 +85,24 @@ namespace SRC3
 
         private void lbxFiles_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            ListBox lb = ((ListBox)sender);
+            if (e.Button == MouseButtons.Left)
             {
-                ListBox lb = ((ListBox)sender);
-                Point pt = new Point(e.X, e.Y);
-                //Retrieve the item at the specified location within the ListBox.
-                int index = lb.IndexFromPoint(pt);
-
                 // Starts a drag-and-drop operation.
-                if (index >= 0)
+                if (lb.SelectedItems.Count > 0)
                 {
-                    // Retrieve the selected item text to drag into the RichTextBox.
-                    lb.DoDragDrop(tbxFolder.Text + "\\" + lb.Items[index].ToString(), DragDropEffects.Copy);
+                    int index = lb.IndexFromPoint(e.Location);
+                    if (!lb.SelectedItems.Contains(lb.Items[index]))
+                        lb.SelectedItems.Add(lb.Items[index]);
+                    lb.DoDragDrop(CListFileUtil.BuildMultiSelectFileList(lb, tbxFolder.Text), DragDropEffects.Copy);
                 }
+            }
+            if(e.Button == MouseButtons.Right)
+            {
+                int index = lb.IndexFromPoint(e.Location);
+                lb.ClearSelected();
+                if (!lb.SelectedItems.Contains(lb.Items[index]))
+                    lb.SelectedItems.Add(lb.Items[index]);
             }
         }
 
@@ -149,12 +154,16 @@ namespace SRC3
         {
             if (cbxPlaylistSelect.SelectedItem == null)
                 createPlaylist();
-            CPlaylistEntry temp = new CPlaylistEntry();
-            temp.Path = e.Data.GetData("System.String", true).ToString();
-            temp.Name = Path.GetFileName(temp.Path);
-            m_playlist.Playlist.Add(temp);
+            String[] entries = e.Data.GetData("System.String", true).ToString().Split(';');
+            foreach (String entry in entries)
+            {
+                CPlaylistEntry temp = new CPlaylistEntry();
+                temp.Path = entry;
+                temp.Name = Path.GetFileNameWithoutExtension(temp.Path);
+                m_playlist.Playlist.Add(temp);
+            }
             lbxPlaylist.Items.Clear();
-            foreach(CPlaylistEntry entry in m_playlist.Playlist)
+            foreach (CPlaylistEntry entry in m_playlist.Playlist)
                 lbxPlaylist.Items.Add(entry);
             lbxPlaylist.Sorted = false;
             lbxPlaylist.Sorted = true;

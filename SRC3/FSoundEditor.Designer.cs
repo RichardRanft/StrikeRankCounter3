@@ -134,6 +134,7 @@
             this.lbxFiles.HorizontalScrollbar = true;
             this.lbxFiles.Location = new System.Drawing.Point(12, 52);
             this.lbxFiles.Name = "lbxFiles";
+            this.lbxFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbxFiles.Size = new System.Drawing.Size(372, 511);
             this.lbxFiles.TabIndex = 8;
             this.lbxFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbxFiles_MouseDown);
