@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRC3", "SRC3\SRC3.csproj", "{59DB16A2-17FB-4947-915B-34DE145B430F}"
 EndProject
@@ -9,6 +9,8 @@ Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "SRC Setup", "SRC Setup\SRC 
 	ProjectSection(ProjectDependencies) = postProject
 		{59DB16A2-17FB-4947-915B-34DE145B430F} = {59DB16A2-17FB-4947-915B-34DE145B430F}
 	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SRC3Setup", "SRC3Setup\SRC3Setup.vdproj", "{96C02245-340E-49DA-92C1-344FC600D33B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,8 +40,16 @@ Global
 		{C2862966-3E0D-42BB-9652-9EA3AF487230}.Release|Any CPU.Build.0 = SingleImage
 		{C2862966-3E0D-42BB-9652-9EA3AF487230}.SingleImage|Any CPU.ActiveCfg = SingleImage
 		{C2862966-3E0D-42BB-9652-9EA3AF487230}.SingleImage|Any CPU.Build.0 = SingleImage
+		{96C02245-340E-49DA-92C1-344FC600D33B}.CD_ROM|Any CPU.ActiveCfg = Release
+		{96C02245-340E-49DA-92C1-344FC600D33B}.Debug|Any CPU.ActiveCfg = Debug
+		{96C02245-340E-49DA-92C1-344FC600D33B}.DVD-5|Any CPU.ActiveCfg = Debug
+		{96C02245-340E-49DA-92C1-344FC600D33B}.Release|Any CPU.ActiveCfg = Release
+		{96C02245-340E-49DA-92C1-344FC600D33B}.SingleImage|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7E7D125-9892-478D-91C0-FFBAF5F8B826}
 	EndGlobalSection
 EndGlobal
