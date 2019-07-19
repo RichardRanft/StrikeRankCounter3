@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using System.Windows.Media;
@@ -113,17 +114,37 @@ namespace SRC3
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(Path))
+                DataSet set = new DataSet();
+                DataTable headerTbl = new DataTable("HeaderInfo");
+                DataColumn col = new DataColumn("Name", Type.GetType("String"));
+                headerTbl.Columns.Add(col);
+                col = new DataColumn("Path", Type.GetType("String"));
+                headerTbl.Columns.Add(col);
+                col = new DataColumn("Random", Type.GetType("bool"));
+                headerTbl.Columns.Add(col);
+                col = new DataColumn("Volume", Type.GetType("double"));
+                headerTbl.Columns.Add(col);
+                DataRow row = headerTbl.NewRow();
+                row["Name"] = Name;
+                row["Path"] = Path;
+                row["Random"] = Random;
+                row["Volume"] = Volume;
+                headerTbl.Rows.Add(row);
+                set.Tables.Add(headerTbl);
+                DataTable listTbl = new DataTable("PlayList");
+                col = new DataColumn("Name", Type.GetType("String"));
+                listTbl.Columns.Add(col);
+                col = new DataColumn("Path", Type.GetType("String"));
+                listTbl.Columns.Add(col);
+                foreach (CPlaylistEntry entry in Playlist)
                 {
-                    sw.WriteLine(Name);
-                    sw.WriteLine(Path);
-                    sw.WriteLine(Random);
-                    sw.WriteLine(Volume);
-                    foreach (CPlaylistEntry entry in Playlist)
-                    {
-                        sw.WriteLine(entry.Name + "," + entry.Path);
-                    }
+                    row = listTbl.NewRow();
+                    row["Name"] = entry.Name;
+                    row["Path"] = entry.Path;
+                    listTbl.Rows.Add(row);
                 }
+                set.Tables.Add(listTbl);
+                set.WriteXml(Path);
                 return true;
             }
             catch(Exception ex)
@@ -141,30 +162,26 @@ namespace SRC3
             bool updatePath = false;
             try
             {
-                using (StreamReader sr = new StreamReader(filepath))
+                DataSet set = new DataSet();
+                set.ReadXml(filepath);
+                if(set.Tables.Contains("HeaderInfo"))
                 {
-                    Name = sr.ReadLine();
-                    Path = sr.ReadLine();
+                    Name = set.Tables["HeaderInfo"].Rows[0]["Name"].ToString();
+                    Path = set.Tables["HeaderInfo"].Rows[0]["Path"].ToString();
                     if (Path != filepath)
                     {
                         Path = filepath;
                         updatePath = true;
                     }
-                    String rand = sr.ReadLine();
-                    Random = bool.Parse(rand);
-                    String volume = sr.ReadLine();
-                    Volume = double.Parse(volume);
-                    String line = "";
-                    String[] parts = { "" };
-                    while(!sr.EndOfStream)
+                    Random = bool.Parse(set.Tables["HeaderInfo"].Rows[0]["Random"].ToString());
+                    Volume = double.Parse(set.Tables["HeaderInfo"].Rows[0]["Volume"].ToString());
+                    if (set.Tables.Contains("PlayList"))
                     {
-                        line = sr.ReadLine();
-                        parts = line.Split(',');
-                        if(parts.Length > 1)
-                        {
+                        foreach (DataRow row in set.Tables["PlayList"].Rows)
+                    {
                             CPlaylistEntry entry = new CPlaylistEntry();
-                            entry.Name = parts[0];
-                            entry.Path = parts[1];
+                            entry.Name = set.Tables["PlayList"].Rows[0]["Name"].ToString();
+                            entry.Path = set.Tables["PlayList"].Rows[0]["Path"].ToString();
                             Playlist.Add(entry);
                         }
                     }
