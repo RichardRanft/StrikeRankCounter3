@@ -188,19 +188,19 @@
             this.stopToolStripMenuItem,
             this.toggleRandomToolStripMenuItem});
             this.cmsPopMainPlayback.Name = "cmsPopMainPlayback";
-            this.cmsPopMainPlayback.Size = new System.Drawing.Size(159, 48);
+            this.cmsPopMainPlayback.Size = new System.Drawing.Size(160, 48);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // toggleRandomToolStripMenuItem
             // 
             this.toggleRandomToolStripMenuItem.Name = "toggleRandomToolStripMenuItem";
-            this.toggleRandomToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.toggleRandomToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.toggleRandomToolStripMenuItem.Text = "Toggle Random";
             this.toggleRandomToolStripMenuItem.Click += new System.EventHandler(this.toggleRandomToolStripMenuItem_Click);
             // 

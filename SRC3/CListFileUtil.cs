@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using log4net;
 
 namespace SRC3
 {
     public static class CListFileUtil
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(CListFileUtil));
+
         public static String BuildMultiSelectFileList(ListBox sourcebox, String path = "")
         {
             StringBuilder sb = new StringBuilder();
@@ -57,7 +59,7 @@ namespace SRC3
             return startPath;
         }
 
-        public static void CreatePlaylist(ref CPlaylist list, ref ComboBox cbx, ref ListBox lbx, String name, String path, EListType type)
+        public static void InitPlaylist(ref CPlaylist list, ref ComboBox cbx, ref ListBox lbx, String name, String path, EListType type)
         {
             list = new CPlaylist();
             list.Name = name;
@@ -96,6 +98,7 @@ namespace SRC3
             }
             catch (Exception ex)
             {
+                m_log.Error("Unable to read base path from registry....", ex);
                 String msg = "Unable to read base path from Registry....";
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
@@ -116,6 +119,7 @@ namespace SRC3
             }
             catch (Exception ex)
             {
+                m_log.Error("Unable to add base path to Registry....", ex);
                 String msg = "Unable to add base path to Registry....";
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)

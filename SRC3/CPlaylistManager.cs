@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using log4net;
 
 namespace SRC3
 {
     public class CPlaylistManager
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(CPlaylistManager));
+
         private List<CPlaylist> m_playlists;
 
         public List<CPlaylist> Playlists
@@ -42,6 +45,12 @@ namespace SRC3
             }
         }
 
+        public void Save()
+        {
+            foreach (CPlaylist list in m_playlists)
+                list.Save();
+        }
+
         public void Add(CPlaylist list)
         {
             m_playlists.Add(list);
@@ -58,6 +67,7 @@ namespace SRC3
             }
             catch(Exception ex)
             {
+                m_log.Error(String.Format("Unable to delete {0} :", filename), ex);
                 msg = String.Format("Unable to delete {0} : {1}", filename, ex);
             }
             return msg;

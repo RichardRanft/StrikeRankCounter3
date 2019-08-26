@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.IO;
+using log4net;
 
 namespace SRC3
 {
     public partial class FSoundEditor : Form
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(FSoundEditor));
+
         private FNewPlaylist m_newPlaylist;
         private MediaPlayer m_player;
         private CPlaylist m_ranklist;
@@ -33,10 +30,11 @@ namespace SRC3
         {
             if (!PlaylistManager.Ranklists.Contains(m_ranklist))
                 PlaylistManager.Add(m_ranklist);
-            listname = CListFileUtil.GetListFilename(listname, ".xml");
+            String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_ranklist, ref cbxRanklistSelect, ref lbxRanklist, listname, startPath, EListType.RANKLIST);
+            m_log.Info(String.Format("Create ranklist {0} in {1}", listname, startPath));
+            CListFileUtil.InitPlaylist(ref m_ranklist, ref cbxRanklistSelect, ref lbxRanklist, filename, startPath, EListType.RANKLIST);
             m_doNotSelect = false;
         }
 
@@ -44,10 +42,11 @@ namespace SRC3
         {
             if (!PlaylistManager.Ranklists.Contains(m_roundlist))
                 PlaylistManager.Add(m_roundlist);
-            listname = CListFileUtil.GetListFilename(listname, ".xml");
+            String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_roundlist, ref cbxRoundlistSelect, ref lbxRoundlist, listname, startPath, EListType.ROUNDLIST);
+            m_log.Info(String.Format("Create ranklist {0} in {1}", listname, startPath));
+            CListFileUtil.InitPlaylist(ref m_roundlist, ref cbxRoundlistSelect, ref lbxRoundlist, filename, startPath, EListType.ROUNDLIST);
             m_doNotSelect = false;
         }
 
@@ -59,7 +58,10 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Cancel)
                     return;
                 if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    m_log.Info(String.Format("Save ranklist {0}", m_ranklist.Name));
                     m_ranklist.Save();
+                }
             }
             m_rankDirty = false;
             if (m_roundDirty)
@@ -68,7 +70,10 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Cancel)
                     return;
                 if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    m_log.Info(String.Format("Save roundlist {0}", m_roundlist.Name));
                     m_roundlist.Save();
+                }
             }
             m_rankDirty = false;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -216,7 +221,10 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Cancel)
                     return;
                 if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    m_log.Info(String.Format("Save ranklist {0}", m_ranklist.Name));
                     m_ranklist.Save();
+                }
             }
             String playlistPath = CListFileUtil.GetBasePathFromRegistry();;
             playlistPath += "\\Playlists\\" + cbxRanklistSelect.Text;
@@ -245,7 +253,10 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Cancel)
                     return;
                 if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    m_log.Info(String.Format("Save roundlist {0}", m_roundlist.Name));
                     m_roundlist.Save();
+                }
             }
             String playlistPath = CListFileUtil.GetBasePathFromRegistry();;
             if (playlistPath.Contains("\\bin\\Debug") || playlistPath.Contains("\\bin\\Release"))

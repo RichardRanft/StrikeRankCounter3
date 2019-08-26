@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Windows.Media;
+using log4net;
 
 namespace SRC3
 {
     public partial class FPlaylistEditor : Form
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(FPlaylistEditor));
+
         private FNewPlaylist m_newPlaylist;
         private MediaPlayer m_player;
         private CPlaylist m_playlist;
@@ -186,8 +183,6 @@ namespace SRC3
             if(m_newPlaylist.ShowDialog() == DialogResult.OK)
             {
                 m_playlist.Save();
-                if (!PlaylistManager.Playlists.Contains(m_playlist))
-                    PlaylistManager.Add(m_playlist);
                 createPlaylist(m_newPlaylist.PlaylistName);
             }
         }
@@ -202,10 +197,12 @@ namespace SRC3
 
         private void createPlaylist(String listname = "")
         {
-            listname = CListFileUtil.GetListFilename(listname, ".xml");
+            if (!PlaylistManager.Playlists.Contains(m_playlist))
+                PlaylistManager.Add(m_playlist);
+            String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_playlist, ref cbxPlaylistSelect, ref lbxPlaylist, listname, startPath, EListType.PLAYLIST);
+            CListFileUtil.InitPlaylist(ref m_playlist, ref cbxPlaylistSelect, ref lbxPlaylist, filename, startPath, EListType.PLAYLIST);
             m_doNotSelect = false;
         }
 

@@ -4,11 +4,14 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using System.Windows.Media;
+using log4net;
 
 namespace SRC3
 {
     public class CPlaylist
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(CPlaylist));
+
         public String Name = "";
         public String Path = "";
         public bool Random { get { return m_random; } set { m_random = value; } }
@@ -74,6 +77,7 @@ namespace SRC3
                 }
                 catch (Exception ex)
                 {
+                    m_log.Error("Unable to play sound:", ex);
                     String msg = "Unable to play sound : " + Environment.NewLine + ex.Message;
                     if (ex.InnerException != null)
                         msg += Environment.NewLine + ex.InnerException.Message;
@@ -95,6 +99,7 @@ namespace SRC3
                 }
                 catch (Exception ex)
                 {
+                    m_log.Error("Unable to play sound:", ex);
                     String msg = "Unable to play sound : " + Environment.NewLine + ex.Message;
                     if (ex.InnerException != null)
                         msg += Environment.NewLine + ex.InnerException.Message;
@@ -150,6 +155,7 @@ namespace SRC3
             }
             catch(Exception ex)
             {
+                m_log.Error(String.Format("Unable to write playlist file {0}:", Path), ex);
                 String msg = Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;
@@ -192,6 +198,7 @@ namespace SRC3
             }
             catch (Exception ex)
             {
+                m_log.Error(String.Format("Unable to read playlist file {0}:", Path), ex);
                 String msg = Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;

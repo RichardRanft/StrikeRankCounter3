@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using log4net;
 
 namespace SRC3
 {
     public partial class Form1 : Form
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(Form1));
+
         private FPlaylistEditor m_playlistEditor;
         private FSoundEditor m_soundEditor;
         private FOptions m_options;
@@ -29,6 +26,7 @@ namespace SRC3
         public Form1()
         {
             InitializeComponent();
+            m_log.Info("Main form loaded.");
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -192,6 +190,8 @@ namespace SRC3
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Form1_Resize(this, new EventArgs());
+            this.Invalidate();
             m_about = new FAboutBox();
             m_options = new FOptions();
             if (m_options.RanksPerRound > 1)
@@ -200,7 +200,6 @@ namespace SRC3
             m_playlistEditor = new FPlaylistEditor();
             m_soundEditor = new FSoundEditor();
             loadPlaylists();
-            Form1_Resize(this, new EventArgs());
             resetCounter();
         }
 

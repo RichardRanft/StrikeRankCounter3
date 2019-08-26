@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using Microsoft.Win32;
+using log4net;
 
 namespace SRC3
 {
     public partial class FOptions : Form
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(FOptions));
+
         private CPlaylistEntry m_resetSnd;
 
         public String BaseAudioPath { get { return tbxBaseSoundPath.Text; } }
@@ -42,6 +37,7 @@ namespace SRC3
             }
             catch(Exception ex)
             {
+                m_log.Error("Unable to update base path in Registry:", ex);
                 String msg = "Unable to update base path in Registry....";
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
@@ -60,6 +56,7 @@ namespace SRC3
             }
             catch (Exception ex)
             {
+                m_log.Error("Unable to save settings:", ex);
                 String msg = "Unable to save settings....";
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
@@ -82,6 +79,7 @@ namespace SRC3
             }
             catch (Exception ex)
             {
+                m_log.Error("Unable to read base path from Registry:", ex);
                 String msg = "Unable to read base path from Registry....";
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
@@ -117,6 +115,7 @@ namespace SRC3
                 }
                 catch (Exception ex)
                 {
+                    m_log.Error("Unable to load settings:", ex);
                     String msg = "Unable to load settings....";
                     msg += Environment.NewLine + ex.Message;
                     if (ex.InnerException != null)

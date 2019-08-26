@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace SRC3
 {
     public partial class FNewPlaylist : Form
     {
+        private static ILog m_log = LogManager.GetLogger(typeof(FNewPlaylist));
+
         public String PlaylistName { get { return tbxPlaylistName.Text; } }
 
         public FNewPlaylist()
