@@ -20,9 +20,12 @@ namespace SRC3
         private bool m_dirty = false;
         private bool m_doNotSelect = false;
 
+        public CPlaylistManager PlaylistManager;
+
         public FPlaylistEditor()
         {
             InitializeComponent();
+            PlaylistManager = new CPlaylistManager();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -33,7 +36,11 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Cancel)
                     return;
                 if (result == System.Windows.Forms.DialogResult.Yes)
+                {
                     m_playlist.Save();
+                    if (!PlaylistManager.Playlists.Contains(m_playlist))
+                        PlaylistManager.Add(m_playlist);
+                }
             }
             m_dirty = false;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -179,6 +186,8 @@ namespace SRC3
             if(m_newPlaylist.ShowDialog() == DialogResult.OK)
             {
                 m_playlist.Save();
+                if (!PlaylistManager.Playlists.Contains(m_playlist))
+                    PlaylistManager.Add(m_playlist);
                 createPlaylist(m_newPlaylist.PlaylistName);
             }
         }
@@ -193,10 +202,10 @@ namespace SRC3
 
         private void createPlaylist(String listname = "")
         {
-            listname = CListFileUtil.GetListFilename(listname, ".playlist");
+            listname = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_playlist, ref cbxPlaylistSelect, ref lbxPlaylist, listname, startPath);
+            CListFileUtil.CreatePlaylist(ref m_playlist, ref cbxPlaylistSelect, ref lbxPlaylist, listname, startPath, EListType.PLAYLIST);
             m_doNotSelect = false;
         }
 
@@ -212,8 +221,6 @@ namespace SRC3
                 if (result == System.Windows.Forms.DialogResult.Yes)
                     m_playlist.Save();
             }
-            String playlistPath = CListFileUtil.GetBasePathFromRegistry();;
-            playlistPath += "\\Playlists\\" + cbxPlaylistSelect.Text;
             if (cbxPlaylistSelect.SelectedIndex >= 0)
                 m_playlist = (CPlaylist)cbxPlaylistSelect.SelectedItem;
             if(m_playlist != null)
@@ -238,13 +245,14 @@ namespace SRC3
             tbxFolder.Text = startPath;
             String playlistPath = CListFileUtil.GetBasePathFromRegistry();;
             playlistPath += "\\Playlists\\";
-            String[] files = Directory.GetFiles(playlistPath, "*.playlist");
+            String[] files = Directory.GetFiles(playlistPath, "*.xml");
             cbxPlaylistSelect.Items.Clear();
             foreach (String file in files)
             {
                 CPlaylist list = new CPlaylist();
                 list.Load(file);
-                cbxPlaylistSelect.Items.Add(list);
+                if(list.ListType == EListType.PLAYLIST)
+                    cbxPlaylistSelect.Items.Add(list);
             }
             if (cbxPlaylistSelect.Items.Count > 0)
                 cbxPlaylistSelect.SelectedIndex = 0;
@@ -269,7 +277,7 @@ namespace SRC3
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            CListFileUtil.RemapPlaylistBasePath(ref m_playlist, CListFileUtil.GetBasePathFromRegistry());
+            m_playlist.Save();
         }
     }
 }

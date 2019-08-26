@@ -11,29 +11,52 @@ namespace PlaylistImport
     {
         static void Main(string[] args)
         {
+            String path = CListFileUtil.GetListStartPath();
             if (args.Length > 0)
             {
-                String path = args[0];
-                if(!Directory.Exists(path))
+                path = args[0];
+                if (!Directory.Exists(path))
                 {
                     Console.WriteLine("Cound not find {0}", path);
                     return;
                 }
-                String[] files = Directory.GetFiles(path, "*.playlist");
-                foreach(String file in files)
-                {
-                    String outfile = Path.GetDirectoryName(file);
-                    outfile += "\\" + Path.GetFileNameWithoutExtension(file);
-                    outfile += ".xml";
-                    CPlaylist list = new CPlaylist();
-                    list.Load(path);
-                    list.Path = outfile;
-                    list.Save();
-                }
             }
-            else
+            List<CPlaylist> playlists = new List<CPlaylist>();
+            String[] files = Directory.GetFiles(path, "*.playlist");
+            foreach (String file in files)
             {
-                Console.WriteLine("Must pass folder path with playlist files to import.");
+                String outfile = CListFileUtil.GetListStartPath();
+                outfile += "\\" + Path.GetFileNameWithoutExtension(file);
+                outfile += ".xml";
+                CPlaylist list = new CPlaylist();
+                list.Load(file);
+                list.Path = outfile;
+                list.Save();
+                playlists.Add(list);
+            }
+            files = Directory.GetFiles(path, "*.ranklist");
+            foreach (String file in files)
+            {
+                String outfile = CListFileUtil.GetListStartPath();
+                outfile += "\\" + Path.GetFileNameWithoutExtension(file);
+                outfile += ".xml";
+                CPlaylist list = new CPlaylist();
+                list.Load(file);
+                list.Path = outfile;
+                list.Save();
+                playlists.Add(list);
+            }
+            files = Directory.GetFiles(path, "*.roundlist");
+            foreach (String file in files)
+            {
+                String outfile = CListFileUtil.GetListStartPath();
+                outfile += "\\" + Path.GetFileNameWithoutExtension(file);
+                outfile += ".xml";
+                CPlaylist list = new CPlaylist();
+                list.Load(file);
+                list.Path = outfile;
+                list.Save();
+                playlists.Add(list);
             }
         }
     }

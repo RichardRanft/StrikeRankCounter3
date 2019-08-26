@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CListFileUtil.cs" />
     <Compile Include="CPlaylist.cs" />
+    <Compile Include="CPlaylistManager.cs" />
     <Compile Include="FAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>

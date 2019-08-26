@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Windows.Forms;
 using System.IO;
@@ -16,6 +13,7 @@ namespace SRC3
         public String Path = "";
         public bool Random { get { return m_random; } set { m_random = value; } }
         public double Volume { get { return m_player.Volume; } set { m_player.Volume = value; } }
+        public EListType ListType = EListType.PLAYLIST;
 
         public List<CPlaylistEntry> Playlist;
 
@@ -116,25 +114,28 @@ namespace SRC3
             {
                 DataSet set = new DataSet();
                 DataTable headerTbl = new DataTable("HeaderInfo");
-                DataColumn col = new DataColumn("Name", Type.GetType("String"));
+                DataColumn col = new DataColumn("Name", typeof(String));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Path", Type.GetType("String"));
+                col = new DataColumn("Path", typeof(String));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Random", Type.GetType("bool"));
+                col = new DataColumn("Random", typeof(bool));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Volume", Type.GetType("double"));
+                col = new DataColumn("Volume", typeof(double));
+                headerTbl.Columns.Add(col);
+                col = new DataColumn("ListType", typeof(int));
                 headerTbl.Columns.Add(col);
                 DataRow row = headerTbl.NewRow();
                 row["Name"] = Name;
                 row["Path"] = Path;
                 row["Random"] = Random;
                 row["Volume"] = Volume;
+                row["ListType"] = ListType;
                 headerTbl.Rows.Add(row);
                 set.Tables.Add(headerTbl);
                 DataTable listTbl = new DataTable("PlayList");
-                col = new DataColumn("Name", Type.GetType("String"));
+                col = new DataColumn("Name", typeof(String));
                 listTbl.Columns.Add(col);
-                col = new DataColumn("Path", Type.GetType("String"));
+                col = new DataColumn("Path", typeof(String));
                 listTbl.Columns.Add(col);
                 foreach (CPlaylistEntry entry in Playlist)
                 {
@@ -159,7 +160,6 @@ namespace SRC3
 
         public bool Load(String filepath)
         {
-            bool updatePath = false;
             try
             {
                 DataSet set = new DataSet();
@@ -171,23 +171,23 @@ namespace SRC3
                     if (Path != filepath)
                     {
                         Path = filepath;
-                        updatePath = true;
+                        set.Tables["HeaderInfo"].Rows[0]["Path"] = Path;
+                        set.WriteXml(filepath);
                     }
                     Random = bool.Parse(set.Tables["HeaderInfo"].Rows[0]["Random"].ToString());
                     Volume = double.Parse(set.Tables["HeaderInfo"].Rows[0]["Volume"].ToString());
+                    ListType = (EListType)int.Parse(set.Tables["HeaderInfo"].Rows[0]["ListType"].ToString());
                     if (set.Tables.Contains("PlayList"))
                     {
                         foreach (DataRow row in set.Tables["PlayList"].Rows)
-                    {
+                        {
                             CPlaylistEntry entry = new CPlaylistEntry();
-                            entry.Name = set.Tables["PlayList"].Rows[0]["Name"].ToString();
-                            entry.Path = set.Tables["PlayList"].Rows[0]["Path"].ToString();
+                            entry.Name = row["Name"].ToString();
+                            entry.Path = row["Path"].ToString();
                             Playlist.Add(entry);
                         }
                     }
                 }
-                if (updatePath)
-                    Save();
                 return true;
             }
             catch (Exception ex)
@@ -210,5 +210,12 @@ namespace SRC3
         {
             return Name;
         }
+    }
+
+    public enum EListType
+    {
+        PLAYLIST,
+        RANKLIST,
+        ROUNDLIST
     }
 }

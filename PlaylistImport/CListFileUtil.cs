@@ -2,26 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace SRC3
+namespace PlaylistImport
 {
     public static class CListFileUtil
     {
-        public static String BuildMultiSelectFileList(ListBox sourcebox, String path = "")
-        {
-            StringBuilder sb = new StringBuilder();
-            int index = 0;
-            foreach(object item in sourcebox.SelectedItems)
-            {
-                sb.Append(String.Format("{0}\\{1}", path, item.ToString()));
-                if (++index < sourcebox.SelectedItems.Count)
-                    sb.Append(";");
-            }
-            return sb.ToString();
-        }
-
         public static String GetListFilename(String listname, String extension)
         {
             String playlistname = listname;
@@ -57,26 +43,32 @@ namespace SRC3
             return startPath;
         }
 
-        public static void CreatePlaylist(ref CPlaylist list, ref ComboBox cbx, ref ListBox lbx, String name, String path, EListType type)
+        public static bool RemapPlaylistBasePath(ref CPlaylist list, string optionsBasePath)
         {
-            list = new CPlaylist();
-            list.Name = name;
-            list.Path = path + "\\" + name;
-            list.ListType = type;
-            lbx.Items.Clear();
-            cbx.Items.Add(list);
-            cbx.Sorted = false;
-            cbx.Sorted = true;
-            cbx.Invalidate();
-            cbx.Refresh();
-            for (int i = 0; i < cbx.Items.Count; ++i)
+            // all playlists and all audio files will reside at the provided base path in
+            // <optionsBasePath>/Audio and <optionsBasePath>/Playlists respectively
+            bool updated = false;
+            List<CPlaylistEntry> removeList = new List<CPlaylistEntry>();
+            string temp = list.Path;
+            if (!temp.Contains(optionsBasePath))
+                updated = true;
+            int index = temp.LastIndexOf("Playlist");
+            list.Path = optionsBasePath + "\\" + temp.Substring(index);
+            foreach (CPlaylistEntry entry in list.Playlist)
             {
-                if (cbx.Items[i].ToString() == list.Name)
+                temp = entry.Path;
+                if (!temp.Contains(optionsBasePath))
                 {
-                    cbx.SelectedIndex = i;
-                    break;
+                    updated = true;
+                    index = temp.LastIndexOf("Audio");
+                    entry.Path = optionsBasePath + "\\" + temp.Substring(index);
+                    if (!File.Exists(entry.Path))
+                        removeList.Add(entry);
                 }
             }
+            foreach (CPlaylistEntry entry in removeList)
+                list.Playlist.Remove(entry);
+            return updated;
         }
 
         public static string GetBasePathFromRegistry()
@@ -100,7 +92,7 @@ namespace SRC3
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;
-                MessageBox.Show(msg, "Unable to Read Base Path");
+                Console.WriteLine("Unable to Read Base Path : {0}", msg);
                 return "";
             }
         }
@@ -120,7 +112,7 @@ namespace SRC3
                 msg += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;
-                MessageBox.Show(msg, "Unable to Add Registry Key");
+                Console.WriteLine("Unable to Add Registry Key : {0}", msg);
             }
         }
     }

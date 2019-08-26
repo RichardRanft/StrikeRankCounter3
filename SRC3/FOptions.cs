@@ -19,6 +19,7 @@ namespace SRC3
         public String BaseAudioPath { get { return tbxBaseSoundPath.Text; } }
         public CPlaylistEntry ResetSound { get { return m_resetSnd; } }
         public int RanksPerRound { get { return (int)nudRankPerRnd.Value; } }
+        public bool CountUp = false;
 
         public FOptions()
         {
@@ -54,6 +55,7 @@ namespace SRC3
                 {
                     sw.WriteLine((int)nudRankPerRnd.Value);
                     sw.WriteLine(m_resetSnd.Name + "," + m_resetSnd.Path);
+                    sw.WriteLine(CountUp.ToString());
                 }
             }
             catch (Exception ex)
@@ -110,6 +112,7 @@ namespace SRC3
                             m_resetSnd.Path = parts[1];
                         }
                         tbxResetSnd.Text = m_resetSnd.Path;
+                        CountUp = bool.Parse(sr.ReadLine());
                     }
                 }
                 catch (Exception ex)
@@ -162,6 +165,11 @@ namespace SRC3
             {
                 tbxBaseSoundPath.Text = fbdBrowse.SelectedPath;
             }
+        }
+
+        private void cbxCountUp_CheckedChanged(object sender, EventArgs e)
+        {
+            CountUp = cbxCountUp.Checked;
         }
     }
 }

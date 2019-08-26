@@ -17,12 +17,14 @@ namespace SRC3
         private FSoundEditor m_soundEditor;
         private FOptions m_options;
         private FAboutBox m_about;
+        private CPlaylistManager m_playlistMan;
         private CPlaylist m_playlist;
         private CPlaylist m_ranklist;
         private CPlaylist m_roundlist;
         private int m_rank = 30;
         private int m_round = 1;
         private int m_rankperrnd = 30;
+        private bool m_countUp = false;
 
         public Form1()
         {
@@ -73,7 +75,11 @@ namespace SRC3
 
         private void  resetCounter()
         {
-            m_rank = m_rankperrnd;
+            m_countUp = m_options.CountUp;
+            if (m_countUp)
+                m_rank = 0;
+            else
+                m_rank = m_rankperrnd;
             m_round = 1;
             if(m_ranklist != null)
             {
@@ -91,12 +97,25 @@ namespace SRC3
         private void advanceCounter()
         {
             bool playRound = false;
-            --m_rank;
-            if(m_rank < 0)
+            if (m_countUp)
             {
-                ++m_round;
-                m_rank = m_rankperrnd;
-                playRound = true;
+                ++m_rank;
+                if (m_rank > m_rankperrnd)
+                {
+                    ++m_round;
+                    m_rank = 0;
+                    playRound = true;
+                }
+            }
+            else
+            {
+                --m_rank;
+                if (m_rank < 0)
+                {
+                    ++m_round;
+                    m_rank = m_rankperrnd;
+                    playRound = true;
+                }
             }
             lblRank.Text = m_rank.ToString();
             lblRound.Text = m_round.ToString();
@@ -125,20 +144,11 @@ namespace SRC3
         {
             if (m_playlistEditor == null)
                 m_playlistEditor = new FPlaylistEditor();
+            m_playlistEditor.PlaylistManager = m_playlistMan;
             m_playlistEditor.ShowDialog();
-            String playlistPath = CListFileUtil.GetBasePathFromRegistry();;
-            if (playlistPath.Contains("\\bin\\Debug") || playlistPath.Contains("\\bin\\Release"))
-            {
-                playlistPath = playlistPath.Replace("\\bin\\Debug", "");
-                playlistPath = playlistPath.Replace("\\bin\\Release", "");
-            }
-            playlistPath += "\\Playlists\\";
-            String[] files = Directory.GetFiles(playlistPath, "*.playlist");
             lbxPlaylistSelect.Items.Clear();
-            foreach (String file in files)
+            foreach (CPlaylist list in m_playlistMan.Playlists)
             {
-                CPlaylist list = new CPlaylist();
-                list.Load(file);
                 lbxPlaylistSelect.Items.Add(list);
             }
         }
@@ -147,7 +157,14 @@ namespace SRC3
         {
             if (m_soundEditor == null)
                 m_soundEditor = new FSoundEditor();
+            m_soundEditor.PlaylistManager = m_playlistMan;
             m_soundEditor.ShowDialog();
+            lbxRankSelect.Items.Clear();
+            foreach (CPlaylist list in m_playlistMan.Ranklists)
+                lbxRankSelect.Items.Add(list);
+            lbxRoundSelect.Items.Clear();
+            foreach (CPlaylist list in m_playlistMan.Roundlists)
+                lbxRoundSelect.Items.Add(list);
         }
 
         private void showOptions()
@@ -179,6 +196,7 @@ namespace SRC3
             m_options = new FOptions();
             if (m_options.RanksPerRound > 1)
                 m_rankperrnd = m_options.RanksPerRound;
+            m_countUp = m_options.CountUp;
             m_playlistEditor = new FPlaylistEditor();
             m_soundEditor = new FSoundEditor();
             loadPlaylists();
@@ -200,36 +218,18 @@ namespace SRC3
         private void loadPlaylists()
         {
             String basePath = CListFileUtil.GetBasePathFromRegistry();
-            String[] files = Directory.GetFiles(basePath + "\\Playlists", "*.playlist");
+            String listPath = basePath + "\\Playlists";
+            m_playlistMan = new CPlaylistManager();
+            m_playlistMan.Load(listPath);
             lbxPlaylistSelect.Items.Clear();
-            foreach (String file in files)
-            {
-                CPlaylist list = new CPlaylist();
-                list.Load(file);
-                if(CListFileUtil.RemapPlaylistBasePath(ref list, basePath))
-                    list.Save();
+            foreach (CPlaylist list in m_playlistMan.Playlists)
                 lbxPlaylistSelect.Items.Add(list);
-            }
-            files = Directory.GetFiles(basePath + "\\Playlists", "*.roundlist");
             lbxRoundSelect.Items.Clear();
-            foreach (String file in files)
-            {
-                CPlaylist list = new CPlaylist();
-                list.Load(file);
-                if (CListFileUtil.RemapPlaylistBasePath(ref list, basePath))
-                    list.Save();
+            foreach (CPlaylist list in m_playlistMan.Roundlists)
                 lbxRoundSelect.Items.Add(list);
-            }
-            files = Directory.GetFiles(basePath + "\\Playlists", "*.ranklist");
             lbxRankSelect.Items.Clear();
-            foreach (String file in files)
-            {
-                CPlaylist list = new CPlaylist();
-                list.Load(file);
-                if (CListFileUtil.RemapPlaylistBasePath(ref list, basePath))
-                    list.Save();
+            foreach (CPlaylist list in m_playlistMan.Ranklists)
                 lbxRankSelect.Items.Add(list);
-            }
         }
 
         private void lbxPlaylistSelect_SelectedIndexChanged(object sender, EventArgs e)

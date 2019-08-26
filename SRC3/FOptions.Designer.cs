@@ -41,6 +41,7 @@
             this.tbxBaseSoundPath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.fbdBrowse = new System.Windows.Forms.FolderBrowserDialog();
+            this.cbxCountUp = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudRankPerRnd)).BeginInit();
             this.SuspendLayout();
             // 
@@ -132,12 +133,24 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Base Audio Path";
             // 
+            // cbxCountUp
+            // 
+            this.cbxCountUp.AutoSize = true;
+            this.cbxCountUp.Location = new System.Drawing.Point(72, 107);
+            this.cbxCountUp.Name = "cbxCountUp";
+            this.cbxCountUp.Size = new System.Drawing.Size(71, 17);
+            this.cbxCountUp.TabIndex = 12;
+            this.cbxCountUp.Text = "Count Up";
+            this.cbxCountUp.UseVisualStyleBackColor = true;
+            this.cbxCountUp.CheckedChanged += new System.EventHandler(this.cbxCountUp_CheckedChanged);
+            // 
             // FOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(323, 170);
             this.ControlBox = false;
+            this.Controls.Add(this.cbxCountUp);
             this.Controls.Add(this.btnBrowseBasePath);
             this.Controls.Add(this.tbxBaseSoundPath);
             this.Controls.Add(this.label3);
@@ -174,5 +187,6 @@
         private System.Windows.Forms.TextBox tbxBaseSoundPath;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FolderBrowserDialog fbdBrowse;
+        private System.Windows.Forms.CheckBox cbxCountUp;
     }
 }

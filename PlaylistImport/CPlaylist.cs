@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 
@@ -14,6 +11,8 @@ namespace PlaylistImport
         public String Path = "";
         public bool Random { get { return m_random; } set { m_random = value; } }
         public double Volume { get { return m_volume; } set { m_volume = value; } }
+        public EListType ListType = EListType.PLAYLIST;
+
         public List<CPlaylistEntry> Playlist;
 
         private bool m_random;
@@ -26,31 +25,39 @@ namespace PlaylistImport
             m_volume = 1.0;
         }
 
+        public override String ToString()
+        {
+            return Name;
+        }
+
         public bool Save()
         {
             try
             {
                 DataSet set = new DataSet();
                 DataTable headerTbl = new DataTable("HeaderInfo");
-                DataColumn col = new DataColumn("Name", Type.GetType("String"));
+                DataColumn col = new DataColumn("Name", typeof(String));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Path", Type.GetType("String"));
+                col = new DataColumn("Path", typeof(String));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Random", Type.GetType("bool"));
+                col = new DataColumn("Random", typeof(bool));
                 headerTbl.Columns.Add(col);
-                col = new DataColumn("Volume", Type.GetType("double"));
+                col = new DataColumn("Volume", typeof(double));
+                headerTbl.Columns.Add(col);
+                col = new DataColumn("ListType", typeof(int));
                 headerTbl.Columns.Add(col);
                 DataRow row = headerTbl.NewRow();
                 row["Name"] = Name;
                 row["Path"] = Path;
                 row["Random"] = Random;
                 row["Volume"] = Volume;
+                row["ListType"] = ListType;
                 headerTbl.Rows.Add(row);
                 set.Tables.Add(headerTbl);
                 DataTable listTbl = new DataTable("PlayList");
-                col = new DataColumn("Name", Type.GetType("String"));
+                col = new DataColumn("Name", typeof(String));
                 listTbl.Columns.Add(col);
-                col = new DataColumn("Path", Type.GetType("String"));
+                col = new DataColumn("Path", typeof(String));
                 listTbl.Columns.Add(col);
                 foreach (CPlaylistEntry entry in Playlist)
                 {
@@ -63,12 +70,12 @@ namespace PlaylistImport
                 set.WriteXml(Path);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 String msg = Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;
-                Console.WriteLine("Unable to write playlist file {0}:\n{1}", Path, msg);
+                Console.WriteLine("Unable to write playlist file " + Path + ": " + msg, "Unable to Write Playlist");
             }
             return false;
         }
@@ -77,25 +84,28 @@ namespace PlaylistImport
         {
             try
             {
-                using (StreamReader sr = new StreamReader(filepath))
+                DataSet set = new DataSet();
+                set.ReadXml(filepath);
+                if (set.Tables.Contains("HeaderInfo"))
                 {
-                    Name = sr.ReadLine();
-                    Path = sr.ReadLine();
-                    String rand = sr.ReadLine();
-                    Random = bool.Parse(rand);
-                    String volume = sr.ReadLine();
-                    Volume = double.Parse(volume);
-                    String line = "";
-                    String[] parts = { "" };
-                    while (!sr.EndOfStream)
+                    Name = set.Tables["HeaderInfo"].Rows[0]["Name"].ToString();
+                    Path = set.Tables["HeaderInfo"].Rows[0]["Path"].ToString();
+                    if (Path != filepath)
                     {
-                        line = sr.ReadLine();
-                        parts = line.Split(',');
-                        if (parts.Length > 1)
+                        Path = filepath;
+                        set.Tables["HeaderInfo"].Rows[0]["Path"] = Path;
+                        set.WriteXml(filepath);
+                    }
+                    Random = bool.Parse(set.Tables["HeaderInfo"].Rows[0]["Random"].ToString());
+                    Volume = double.Parse(set.Tables["HeaderInfo"].Rows[0]["Volume"].ToString());
+                    ListType = (EListType)int.Parse(set.Tables["HeaderInfo"].Rows[0]["ListType"].ToString());
+                    if (set.Tables.Contains("PlayList"))
+                    {
+                        foreach (DataRow row in set.Tables["PlayList"].Rows)
                         {
                             CPlaylistEntry entry = new CPlaylistEntry();
-                            entry.Name = parts[0];
-                            entry.Path = parts[1];
+                            entry.Name = row["Name"].ToString();
+                            entry.Path = row["Path"].ToString();
                             Playlist.Add(entry);
                         }
                     }
@@ -107,7 +117,7 @@ namespace PlaylistImport
                 String msg = Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     msg += Environment.NewLine + ex.InnerException.Message;
-                Console.WriteLine("Unable to read playlist file {0}:\n{1}", filepath, msg);
+                Console.WriteLine("Unable to read playlist file " + filepath + ": " + msg, "Unable to Read Playlist");
             }
             return false;
         }
@@ -122,5 +132,12 @@ namespace PlaylistImport
         {
             return Name;
         }
+    }
+
+    public enum EListType
+    {
+        PLAYLIST,
+        RANKLIST,
+        ROUNDLIST
     }
 }

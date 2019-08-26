@@ -22,6 +22,8 @@ namespace SRC3
         private bool m_roundDirty = false;
         private bool m_doNotSelect = false;
 
+        public CPlaylistManager PlaylistManager;
+
         public FSoundEditor()
         {
             InitializeComponent();
@@ -29,19 +31,23 @@ namespace SRC3
 
         private void createRanklist(String listname = "")
         {
-            listname = CListFileUtil.GetListFilename(listname, ".ranklist");
+            if (!PlaylistManager.Ranklists.Contains(m_ranklist))
+                PlaylistManager.Add(m_ranklist);
+            listname = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_ranklist, ref cbxRanklistSelect, ref lbxRanklist, listname, startPath);
+            CListFileUtil.CreatePlaylist(ref m_ranklist, ref cbxRanklistSelect, ref lbxRanklist, listname, startPath, EListType.RANKLIST);
             m_doNotSelect = false;
         }
 
         private void createRoundlist(String listname = "")
         {
-            listname = CListFileUtil.GetListFilename(listname, ".roundlist");
+            if (!PlaylistManager.Ranklists.Contains(m_roundlist))
+                PlaylistManager.Add(m_roundlist);
+            listname = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
             m_doNotSelect = true;
-            CListFileUtil.CreatePlaylist(ref m_roundlist, ref cbxRoundlistSelect, ref lbxRoundlist, listname, startPath);
+            CListFileUtil.CreatePlaylist(ref m_roundlist, ref cbxRoundlistSelect, ref lbxRoundlist, listname, startPath, EListType.ROUNDLIST);
             m_doNotSelect = false;
         }
 
@@ -78,24 +84,19 @@ namespace SRC3
             tbxFolder.Text = startPath;
             String playlistPath = CListFileUtil.GetBasePathFromRegistry();
             playlistPath += "\\Playlists\\";
-            String[] files = Directory.GetFiles(playlistPath, "*.ranklist");
+            String[] files = Directory.GetFiles(playlistPath, "*.xml");
             cbxRanklistSelect.Items.Clear();
             foreach (String file in files)
             {
                 CPlaylist list = new CPlaylist();
                 list.Load(file);
-                cbxRanklistSelect.Items.Add(list);
+                if(list.ListType == EListType.RANKLIST)
+                    cbxRanklistSelect.Items.Add(list);
+                if(list.ListType == EListType.ROUNDLIST)
+                    cbxRoundlistSelect.Items.Add(list);
             }
             if (cbxRanklistSelect.Items.Count > 0)
                 cbxRanklistSelect.SelectedIndex = 0;
-            files = Directory.GetFiles(playlistPath, "*.roundlist");
-            cbxRoundlistSelect.Items.Clear();
-            foreach (String file in files)
-            {
-                CPlaylist list = new CPlaylist();
-                list.Load(file);
-                cbxRoundlistSelect.Items.Add(list);
-            }
             if (cbxRoundlistSelect.Items.Count > 0)
                 cbxRoundlistSelect.SelectedIndex = 0;
             updateFileList();
@@ -353,12 +354,12 @@ namespace SRC3
 
         private void btnUpdateRank_Click(object sender, EventArgs e)
         {
-            CListFileUtil.RemapPlaylistBasePath(ref m_ranklist, CListFileUtil.GetBasePathFromRegistry());
+            m_ranklist.Save();
         }
 
         private void btnUpdateRound_Click(object sender, EventArgs e)
         {
-            CListFileUtil.RemapPlaylistBasePath(ref m_roundlist, CListFileUtil.GetBasePathFromRegistry());
+            m_roundlist.Save();
         }
     }
 }
