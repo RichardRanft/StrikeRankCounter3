@@ -1,0 +1,7 @@
+H:\programming\StrikeRankCounter3\PlaylistImport\bin\Release\PlaylistImport.exe.config
+H:\programming\StrikeRankCounter3\PlaylistImport\bin\Release\PlaylistImport.exe
+H:\programming\StrikeRankCounter3\PlaylistImport\bin\Release\PlaylistImport.pdb
+H:\programming\StrikeRankCounter3\PlaylistImport\obj\Release\PlaylistImport.csprojAssemblyReference.cache
+H:\programming\StrikeRankCounter3\PlaylistImport\obj\Release\PlaylistImport.csproj.CoreCompileInputs.cache
+H:\programming\StrikeRankCounter3\PlaylistImport\obj\Release\PlaylistImport.exe
+H:\programming\StrikeRankCounter3\PlaylistImport\obj\Release\PlaylistImport.pdb

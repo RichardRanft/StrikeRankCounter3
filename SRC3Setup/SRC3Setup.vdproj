@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_A5D01EAF0C2AB16399C93285B562FD25"
+        "OwnerKey" = "8:_DB16F55175E4462F86245F8A027F91F4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DB16F55175E4462F86245F8A027F91F4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -23,6 +29,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DB16F55175E4462F86245F8A027F91F4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A5D01EAF0C2AB16399C93285B562FD25"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -43,6 +55,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -59,6 +79,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -88,6 +124,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A5D01EAF0C2AB16399C93285B562FD25"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A5D01EAF0C2AB16399C93285B562FD25"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DA3BDEC17A334DA49C66123D621140A8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -132,6 +199,17 @@
                             "Property" = "8:_64B488D333914638AD8CE0939C594DA6"
                                 "Folders"
                                 {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A07E8730F4464FF9A2515B6428321B54"
+                                    {
+                                    "Name" = "8:Playlists"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_5174660033D74102837DF0ADBEE1D8D8"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -176,9 +254,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:SRC3Setup"
+        "ProductName" = "8:SRC3"
         "ProductCode" = "8:{FCD52721-2CDA-45C4-B722-1DC847385905}"
-        "PackageCode" = "8:{C67BEED0-28A4-4C6B-AF4A-20F3974535EC}"
+        "PackageCode" = "8:{0A5F4F67-25CC-4007-85C0-9C7EC8796545}"
         "UpgradeCode" = "8:{213E691B-8780-4F0D-853E-C4A6815B9DA7}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -186,15 +264,15 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Roostertail Games"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:SRC3Setup"
+        "Title" = "8:Strike Rank Counter 3 Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Roostertail Games"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:http://www.roostertailgames.com"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -314,16 +392,16 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A199B10822734BA885051FD984B0E90B"
             {
-            "Name" = "8:Shortcut to Primary output from SRC3 (Active)"
+            "Name" = "8:Strike Rank Counter 3"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_DB16F55175E4462F86245F8A027F91F4"
             "Folder" = "8:_281A810E6BE8426CAE707FF48F014777"
             "WorkingFolder" = "8:_DA3BDEC17A334DA49C66123D621140A8"
-            "Icon" = "8:"
+            "Icon" = "8:_DB16F55175E4462F86245F8A027F91F4"
             "Feature" = "8:"
             }
         }
@@ -783,7 +861,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DB16F55175E4462F86245F8A027F91F4"
             {
-            "SourcePath" = "8:..\\SRC3\\obj\\Debug\\SRC3.exe"
+            "SourcePath" = "8:..\\SRC3\\obj\\Release\\SRC3.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DA3BDEC17A334DA49C66123D621140A8"

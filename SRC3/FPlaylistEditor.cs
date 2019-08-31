@@ -46,9 +46,8 @@ namespace SRC3
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            String startPath = CListFileUtil.GetBasePathFromRegistry();;
-            startPath += "\\Audio";
-            fbdBrowse.SelectedPath = startPath;
+            if (!String.IsNullOrEmpty(tbxFolder.Text))
+                fbdBrowse.SelectedPath = tbxFolder.Text;
             if(fbdBrowse.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 tbxFolder.Text = fbdBrowse.SelectedPath;
@@ -96,6 +95,11 @@ namespace SRC3
                 if (lb.SelectedItems.Count > 0)
                 {
                     int index = lb.IndexFromPoint(e.Location);
+                    if(index < 0)
+                    {
+                        lb.ClearSelected();
+                        return;
+                    }
                     if (!lb.SelectedItems.Contains(lb.Items[index]))
                         lb.SelectedItems.Add(lb.Items[index]);
                     lb.DoDragDrop(CListFileUtil.BuildMultiSelectFileList(lb, tbxFolder.Text), DragDropEffects.Copy);
@@ -105,8 +109,11 @@ namespace SRC3
             {
                 int index = lb.IndexFromPoint(e.Location);
                 lb.ClearSelected();
-                if (!lb.SelectedItems.Contains(lb.Items[index]))
-                    lb.SelectedItems.Add(lb.Items[index]);
+                if (index >= 0)
+                {
+                    if (!lb.SelectedItems.Contains(lb.Items[index]))
+                        lb.SelectedItems.Add(lb.Items[index]);
+                }
             }
         }
 
@@ -182,7 +189,11 @@ namespace SRC3
                 m_newPlaylist = new FNewPlaylist();
             if(m_newPlaylist.ShowDialog() == DialogResult.OK)
             {
-                m_playlist.Save();
+                if (m_playlist != null && m_dirty)
+                {
+                    if(MessageBox.Show(m_playlist.Name + " has unsaved changes.  Save now?", "Save Changes?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        m_playlist.Save();
+                }
                 createPlaylist(m_newPlaylist.PlaylistName);
             }
         }
@@ -197,7 +208,7 @@ namespace SRC3
 
         private void createPlaylist(String listname = "")
         {
-            if (!PlaylistManager.Playlists.Contains(m_playlist))
+            if (m_playlist != null && !PlaylistManager.Playlists.Contains(m_playlist))
                 PlaylistManager.Add(m_playlist);
             String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
@@ -275,6 +286,7 @@ namespace SRC3
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             m_playlist.Save();
+            m_dirty = false;
         }
     }
 }

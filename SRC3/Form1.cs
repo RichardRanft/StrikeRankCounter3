@@ -218,6 +218,19 @@ namespace SRC3
         {
             String basePath = CListFileUtil.GetBasePathFromRegistry();
             String listPath = basePath + "\\Playlists";
+            if(!Directory.Exists(listPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(listPath);
+                }
+                catch(Exception ex)
+                {
+                    m_log.Error("Unable to create playlist storage path " + listPath, ex);
+                    MessageBox.Show("Unable to create the playlist storage path.  " + ex.Message, "Unable To Create Path");
+                    return;
+                }
+            }
             m_playlistMan = new CPlaylistManager();
             m_playlistMan.Load(listPath);
             lbxPlaylistSelect.Items.Clear();

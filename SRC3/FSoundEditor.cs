@@ -28,7 +28,7 @@ namespace SRC3
 
         private void createRanklist(String listname = "")
         {
-            if (!PlaylistManager.Ranklists.Contains(m_ranklist))
+            if (m_ranklist != null && !PlaylistManager.Ranklists.Contains(m_ranklist))
                 PlaylistManager.Add(m_ranklist);
             String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
@@ -40,7 +40,7 @@ namespace SRC3
 
         private void createRoundlist(String listname = "")
         {
-            if (!PlaylistManager.Ranklists.Contains(m_roundlist))
+            if (m_roundlist != null && !PlaylistManager.Ranklists.Contains(m_roundlist))
                 PlaylistManager.Add(m_roundlist);
             String filename = CListFileUtil.GetListFilename(listname, ".xml");
             String startPath = CListFileUtil.GetListStartPath();
@@ -282,9 +282,6 @@ namespace SRC3
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            String startPath = CListFileUtil.GetBasePathFromRegistry();;
-            startPath += "\\Audio";
-            fbdBrowse.SelectedPath = startPath;
             if (fbdBrowse.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 tbxFolder.Text = fbdBrowse.SelectedPath;
@@ -331,7 +328,11 @@ namespace SRC3
                 m_newPlaylist = new FNewPlaylist();
             if (m_newPlaylist.ShowDialog() == DialogResult.OK)
             {
-                m_ranklist.Save();
+                if (m_ranklist != null && m_rankDirty)
+                {
+                    if (MessageBox.Show(m_ranklist.Name + " has unsaved changes.  Save now?", "Save Changes?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        m_ranklist.Save();
+                }
                 createRanklist(m_newPlaylist.PlaylistName);
             }
         }
@@ -350,7 +351,11 @@ namespace SRC3
                 m_newPlaylist = new FNewPlaylist();
             if (m_newPlaylist.ShowDialog() == DialogResult.OK)
             {
-                m_roundlist.Save();
+                if (m_roundlist != null && m_roundDirty)
+                {
+                    if (MessageBox.Show(m_roundlist.Name + " has unsaved changes.  Save now?", "Save Changes?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        m_roundlist.Save();
+                }
                 createRoundlist(m_newPlaylist.PlaylistName);
             }
         }
@@ -366,11 +371,13 @@ namespace SRC3
         private void btnUpdateRank_Click(object sender, EventArgs e)
         {
             m_ranklist.Save();
+            m_rankDirty = false;
         }
 
         private void btnUpdateRound_Click(object sender, EventArgs e)
         {
             m_roundlist.Save();
+            m_roundDirty = false;
         }
     }
 }

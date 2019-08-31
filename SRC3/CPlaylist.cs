@@ -117,6 +117,7 @@ namespace SRC3
         {
             try
             {
+                m_log.Info(String.Format("Writing {0} to file {1}", Name, Path));
                 DataSet set = new DataSet();
                 DataTable headerTbl = new DataTable("HeaderInfo");
                 DataColumn col = new DataColumn("Name", typeof(String));
@@ -151,6 +152,7 @@ namespace SRC3
                 }
                 set.Tables.Add(listTbl);
                 set.WriteXml(Path);
+                m_log.Info(String.Format("Saved {0}", Name));
                 return true;
             }
             catch(Exception ex)
@@ -168,6 +170,7 @@ namespace SRC3
         {
             try
             {
+                m_log.Info(String.Format("Reading {0}", filepath));
                 DataSet set = new DataSet();
                 set.ReadXml(filepath);
                 if(set.Tables.Contains("HeaderInfo"))
@@ -194,6 +197,7 @@ namespace SRC3
                         }
                     }
                 }
+                m_log.Info(String.Format("{0} loaded", Name));
                 return true;
             }
             catch (Exception ex)

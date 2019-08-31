@@ -28,22 +28,28 @@ namespace SRC3
         {
             String playlistname = listname;
             String startPath = GetListStartPath();
-            String[] files = Directory.GetFiles(startPath);
-            bool addNumber = false;
-            int count = 1;
-            foreach (String file in files)
+            try
             {
-                if (Path.GetFileName(file).Contains(playlistname))
+                String[] files = Directory.GetFiles(startPath);
+                bool addNumber = false;
+                int count = 1;
+                foreach (String file in files)
                 {
-                    addNumber = true;
-                    ++count;
+                    if (Path.GetFileName(file).Contains(playlistname))
+                    {
+                        addNumber = true;
+                        ++count;
+                    }
                 }
+                if (addNumber)
+                    playlistname += count.ToString() + extension;
+                else
+                    playlistname += extension;
             }
-            if (addNumber)
-                playlistname += count.ToString() + extension;
-            else
-                playlistname += extension;
-
+            catch(Exception ex)
+            {
+                m_log.Error("Error getting list files from " + startPath, ex);
+            }
             return playlistname;
         }
 
